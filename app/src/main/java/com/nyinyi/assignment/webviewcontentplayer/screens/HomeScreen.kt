@@ -39,7 +39,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
         // WebView
         AndroidView(
             factory = { webView },
-            update = { it.loadUrl("https://www.youtube.com/") },
+            update = { it.loadUrl("file:///android_asset/slideshow.html") },
             modifier = Modifier
                 .fillMaxSize()
                 .testTag("webview")

@@ -1,6 +1,8 @@
 package com.nyinyi.assignment.webviewcontentplayer.screens
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.ConsoleMessage
@@ -18,18 +20,47 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.nyinyi.assignment.webviewcontentplayer.SC_INTERFACE
+import org.json.JSONObject
 
 @SuppressLint("JavascriptInterface", "SetJavaScriptEnabled")
 @Composable
 fun HomeScreen(paddingValues: PaddingValues) {
     val context = LocalContext.current
     val webView = rememberWebView()
+
+    // Initialize SC_INTERFACE and attach to WebView
+    val scInterface = remember { SC_INTERFACE(context) }
+    LaunchedEffect(webView) {
+        // Set up WebView instance for screenshot functionality
+        SC_INTERFACE.setWebViewInstance(webView)
+
+        // Clear any existing data
+        webView.clearCache(true)
+        webView.clearHistory()
+
+        webView.loadUrl("file:///android_asset/slideshow.html")
+        // Add JavaScript interfaces
+        webView.addJavascriptInterface(scInterface, "android")
+        webView.addJavascriptInterface(scInterface, "SC_INTERFACE")
+
+        // Add debug button (optional)
+        webView.evaluateJavascript(
+            """
+            console.log('WebView dimensions:', {
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        """.trimIndent(), null
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -52,12 +83,16 @@ fun HomeScreen(paddingValues: PaddingValues) {
             horizontalArrangement = Arrangement.End
         ) {
             Button(onClick = {
-
+                val deviceInfoJson = scInterface.device_info()
+                showDeviceInfoDialog(context, deviceInfoJson)
             }) {
                 Text("Device Info")
             }
             Button(onClick = {
-
+                webView.evaluateJavascript(
+                    "window.SC_INTERFACE.take_screenshot('handleScreenshot')",
+                    null
+                )
             }) {
                 Text("Screenshot")
             }
@@ -137,5 +172,22 @@ fun rememberWebView(): WebView {
                 }
             }
         }
+    }
+}
+
+private fun showDeviceInfoDialog(context: Context, message: String) {
+    AlertDialog.Builder(context)
+        .setTitle("Device Info")
+        .setMessage(formatJson(message))
+        .setPositiveButton("OK", null)
+        .show()
+}
+
+private fun formatJson(json: String): String {
+    return try {
+        val jsonObject = JSONObject(json)
+        jsonObject.toString(4)
+    } catch (e: Exception) {
+        json
     }
 }

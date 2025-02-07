@@ -10,6 +10,8 @@ activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 webkit = "1.4.0"
 kotlinxSerialization = "1.4.1"
+espresso = "3.5.1"
+extJunit = "1.1.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +30,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+androidx-espresso-web = { group = "androidx.test.espresso", name = "espresso-web", version.ref = "espresso" }
+androidx-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -5,7 +5,7 @@ A native Android application that implements a WebView-based slideshow player wi
 ## 🎥 Proof of Work
 
 ### Video Demonstration
-[Show testing video]
+(screenrecord/pow.mp4)
 
 ## 🌟 Features
 

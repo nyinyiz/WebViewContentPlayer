@@ -5,7 +5,7 @@ A native Android application that implements a WebView-based slideshow player wi
 ## 🎥 Proof of Work
 
 ### Video Demonstration
-[Watch Demo Video](https://github.com/nyinyiz/WebViewContentPlayer/screenrecord/pow.mp4)
+
 
 > Note: The demo video showcases the key features including WebView content playback, screenshot functionality, and device information retrieval.
 

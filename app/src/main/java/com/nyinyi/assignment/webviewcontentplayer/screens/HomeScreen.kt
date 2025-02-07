@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -32,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
@@ -43,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.nyinyi.assignment.webviewcontentplayer.SC_INTERFACE
 import org.json.JSONObject
-import androidx.compose.ui.graphics.Color
 
 @SuppressLint("JavascriptInterface", "SetJavaScriptEnabled")
 @Composable
@@ -97,7 +99,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(16.dp),
             horizontalArrangement = Arrangement.End
         ) {
             Button(onClick = {
@@ -107,6 +109,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
             }) {
                 Text("Device Info")
             }
+            Spacer(modifier = Modifier.width(8.dp))
             Button(onClick = {
                 webView.evaluateJavascript(
                     "window.SC_INTERFACE.take_screenshot('handleScreenshot')",
@@ -208,7 +211,7 @@ private fun DeviceInfoDialog(
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabs = listOf("JSON Format", "User Friendly")
-    
+
     val jsonText = remember(message) { formatJson(message) }
     val userFriendlyText = remember(message) { createUserFriendlyFormat(message) }
 
@@ -226,7 +229,7 @@ private fun DeviceInfoDialog(
                         )
                     }
                 }
-                
+
                 val scrollState = rememberScrollState()
                 if (selectedTabIndex == 0) {
                     Text(
@@ -270,14 +273,14 @@ private fun createUserFriendlyFormat(jsonString: String): String {
     return buildAnnotatedString {
         try {
             val json = JSONObject(jsonString)
-            
+
             // App Info
             withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Color(0xFF1976D2))) {
                 append("App Information\n")
             }
             append("• Version: ${json.optString("app_version")}\n")
             append("• Package: ${json.optString("package_name")}\n\n")
-            
+
             // Screen Info
             withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Color(0xFF1976D2))) {
                 append("Screen Information\n")
@@ -285,7 +288,7 @@ private fun createUserFriendlyFormat(jsonString: String): String {
             append("• Width: ${json.optString("screen_width")} pixels\n")
             append("• Height: ${json.optString("screen_height")} pixels\n")
             append("• Density: ${json.optString("screen_density")}\n\n")
-            
+
             // Device Info
             withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Color(0xFF1976D2))) {
                 append("Device Information\n")
@@ -293,7 +296,7 @@ private fun createUserFriendlyFormat(jsonString: String): String {
             append("• Manufacturer: ${json.optString("device_manufacturer")}\n")
             append("• Model: ${json.optString("device_model")}\n")
             append("• Android Version: ${json.optString("android_version")}\n\n")
-            
+
             // Native Info
             val nativeInfo = json.optJSONObject("native_info")
             if (nativeInfo != null) {
@@ -301,13 +304,13 @@ private fun createUserFriendlyFormat(jsonString: String): String {
                     append("System Information\n")
                 }
                 append("• RAM Total: ${formatBytes(nativeInfo.optString("ram_total"))}\n")
-                
+
                 val cpuInfo = nativeInfo.optJSONObject("cpu_info")
                 if (cpuInfo != null) {
                     append("• CPU Cores: ${cpuInfo.optString("cpu_cores")}\n")
                     append("• CPU Frequency: ${cpuInfo.optString("cpu_freq")} MHz\n")
                 }
-                
+
                 append("• Kernel Version: ${nativeInfo.optString("kernel_version")}\n")
                 append("• Build Fingerprint: ${nativeInfo.optString("build_fingerprint")}\n")
                 append("• Hardware Serial: ${nativeInfo.optString("hardware_serial")}\n")

@@ -52,7 +52,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
         // WebView
         AndroidView(
             factory = { webView },
-            update = { it.loadUrl("file:///android_asset/slideshow.html") },
             modifier = Modifier
                 .fillMaxSize()
                 .testTag("webview")
@@ -95,6 +94,9 @@ fun HomeScreen(paddingValues: PaddingValues) {
 
 // Helper function to set up WebView
 private fun setupWebView(webView: WebView, scInterface: SC_INTERFACE) {
+    // Set up WebView instance for screenshot functionality
+    SC_INTERFACE.setWebViewInstance(webView)
+
     with(webView) {
         clearCache(true)
         clearHistory()

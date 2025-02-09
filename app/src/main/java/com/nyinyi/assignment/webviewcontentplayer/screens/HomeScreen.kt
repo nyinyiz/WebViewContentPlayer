@@ -36,10 +36,8 @@ fun HomeScreen(paddingValues: PaddingValues) {
     var showDeviceInfoDialog by remember { mutableStateOf(false) }
     var deviceInfo by remember { mutableStateOf("") }
 
-    // Initialize SC_INTERFACE and attach to WebView
     val scInterface = remember { SC_INTERFACE(context) }
 
-    // Set up WebView and JavaScript interface
     LaunchedEffect(webView) {
         setupWebView(webView, scInterface)
     }
@@ -49,7 +47,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
             .fillMaxSize()
             .padding(paddingValues)
     ) {
-        // WebView
         AndroidView(
             factory = { webView },
             modifier = Modifier
@@ -57,7 +54,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
                 .testTag("webview")
         )
 
-        // Buttons for Device Info and Screenshot
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,7 +79,6 @@ fun HomeScreen(paddingValues: PaddingValues) {
         }
     }
 
-    // Show Device Info Dialog if needed
     if (showDeviceInfoDialog) {
         DeviceInfoDialog(
             message = deviceInfo,
@@ -92,9 +87,7 @@ fun HomeScreen(paddingValues: PaddingValues) {
     }
 }
 
-// Helper function to set up WebView
 private fun setupWebView(webView: WebView, scInterface: SC_INTERFACE) {
-    // Set up WebView instance for screenshot functionality
     SC_INTERFACE.setWebViewInstance(webView)
 
     with(webView) {
@@ -102,11 +95,9 @@ private fun setupWebView(webView: WebView, scInterface: SC_INTERFACE) {
         clearHistory()
         loadUrl("file:///android_asset/slideshow.html")
 
-        // Add JavaScript interfaces
         addJavascriptInterface(scInterface, "android")
         addJavascriptInterface(scInterface, "SC_INTERFACE")
 
-        // Debugging: Log WebView dimensions
         evaluateJavascript(
             """
             console.log('WebView dimensions:', {

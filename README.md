@@ -27,9 +27,8 @@ A native Android application that implements a WebView-based slideshow player wi
 
 ### UI Components (Jetpack Compose)
 - Full-screen content display
-- Floating action buttons for screenshots and device info
+- Buttons for screenshots and device info
 - Dialog display for device information
-- Screenshot preview functionality
 - Modern Material Design implementation
 
 ### JavaScript Bridge Interface
@@ -167,43 +166,12 @@ The slideshow content is located in `app/src/main/assets/slideshow.html`. To mod
 - Android NDK 21.0 or later
 - CMake 3.10.2 or later
 
-### Building Native Libraries
-
-```bash
-# Build native libraries
-./gradlew externalNativeBuildDebug
-./gradlew externalNativeBuildRelease
-```
-
 ### Building the Project
 
 1. Open project in Android Studio
 2. Sync Gradle files
 3. Build native libraries
 4. Build project (Build -> Make Project)
-
-## 🧪 Testing
-
-```bash
-# Run unit tests
-./gradlew test
-
-# Run instrumented tests
-./gradlew connectedAndroidTest
-
-# Run native tests
-./gradlew ctest
-```
-
-## 📦 Building for Production
-
-```bash
-# Generate debug APK
-./gradlew assembleDebug
-
-# Generate release APK
-./gradlew assembleRelease
-```
 
 ## 🔄 Version History
 

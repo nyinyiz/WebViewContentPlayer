@@ -6,6 +6,8 @@ A native Android application that implements a WebView-based slideshow player wi
 
 ### Video Demonstration
 
+https://github.com/user-attachments/assets/abc8ce06-a818-4480-a1d8-23eb5ecd21f8
+
 
 > Note: The demo video showcases the key features including WebView content playback, screenshot functionality, and device information retrieval.
 
@@ -22,13 +24,13 @@ A native Android application that implements a WebView-based slideshow player wi
 - RAM information retrieval
 - CPU cores and frequency detection
 - Kernel version information
-- Build fingerprint access
 - Hardware serial number retrieval
 
 ### UI Components (Jetpack Compose)
 - Full-screen content display
-- Buttons for screenshots and device info
+- Compose Buttons for screenshots and device info
 - Dialog display for device information
+- Screenshot preview functionality
 - Modern Material Design implementation
 
 ### JavaScript Bridge Interface
@@ -176,11 +178,11 @@ The slideshow content is located in `app/src/main/assets/slideshow.html`. To mod
 ## 🔄 Version History
 
 - 1.0.0
-  - Full WebView implementation
-  - Native C++ system information integration
-  - Screenshot functionality
-  - Device information display
-  - Compose UI implementation
+    - Full WebView implementation
+    - Native C++ system information integration
+    - Screenshot functionality
+    - Device information display
+    - Compose UI implementation
 
 ---
 
